@@ -39,8 +39,7 @@ export const drawHand = (predictions, ctx) => {
     // Loop through each prediction
     predictions.forEach((prediction) => {
       // Grab landmarks
-      const landmarks = prediction.landmarks;
-
+      const landmarks = prediction.keypoints;
       // Loop through fingers
       for (let j = 0; j < Object.keys(fingerJoints).length; j++) {
         let finger = Object.keys(fingerJoints)[j];
@@ -53,25 +52,24 @@ export const drawHand = (predictions, ctx) => {
           // Draw path
           ctx.beginPath();
           ctx.moveTo(
-            landmarks[firstJointIndex][0],
-            landmarks[firstJointIndex][1]
+            landmarks[firstJointIndex]["x"],
+            landmarks[firstJointIndex]["y"]
           );
           ctx.lineTo(
-            landmarks[secondJointIndex][0],
-            landmarks[secondJointIndex][1]
+            landmarks[secondJointIndex]["x"],
+            landmarks[secondJointIndex]["y"]
           );
           ctx.strokeStyle = "plum";
           ctx.lineWidth = 4;
           ctx.stroke();
         }
       }
-
       // Loop through landmarks and draw em
       for (let i = 0; i < landmarks.length; i++) {
         // Get x point
-        const x = landmarks[i][0];
+        const x = landmarks[i]["x"];
         // Get y point
-        const y = landmarks[i][1];
+        const y = landmarks[i]["y"];
         // Start drawing
         ctx.beginPath();
         ctx.arc(x, y, style[i]["size"], 0, 3 * Math.PI);
